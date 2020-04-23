@@ -18,4 +18,6 @@ public interface UmsMenuDao {
     int updateByPrimaryKey(UmsMenu record);
 
     List<UmsMenu> selectByRoleByIds(List<Long> roleIds);
+
+    List<UmsMenu> selectAll();
 }

@@ -1,9 +1,12 @@
 package club.banyuan.mall.mgt.bean;
 
 
-public class
-AdminLoginParam {
+import javax.validation.constraints.NotBlank;
+
+public class AdminLoginParam {
+   @NotBlank(message = "用户名不能为空")
    private String username;
+   @NotBlank(message = "密码不能为空")
    private String password;
 
    public AdminLoginParam() {

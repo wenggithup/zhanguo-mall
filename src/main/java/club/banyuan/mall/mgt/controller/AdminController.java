@@ -8,6 +8,7 @@ import club.banyuan.mall.mgt.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @RestController
@@ -19,7 +20,7 @@ public class AdminController {
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
-    ResponseResult login(@RequestBody AdminLoginParam adminLoginParam){
+    ResponseResult login(@RequestBody @Valid AdminLoginParam adminLoginParam){
         AdminLoginResp adminLoginResp= adminService.login(adminLoginParam);
 
         return ResponseResult.success (adminLoginResp);

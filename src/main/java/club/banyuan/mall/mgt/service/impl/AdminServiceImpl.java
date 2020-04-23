@@ -4,6 +4,8 @@ import club.banyuan.mall.mgt.bean.AdminInfoMenusBean;
 import club.banyuan.mall.mgt.bean.AdminInfoResp;
 import club.banyuan.mall.mgt.bean.AdminLoginParam;
 import club.banyuan.mall.mgt.bean.AdminLoginResp;
+import club.banyuan.mall.mgt.common.FailReason;
+import club.banyuan.mall.mgt.common.RequestFailException;
 import club.banyuan.mall.mgt.dao.UmsAdminDao;
 import club.banyuan.mall.mgt.dao.UmsMenuDao;
 import club.banyuan.mall.mgt.dao.UmsRoleDao;
@@ -19,6 +21,8 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +30,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static club.banyuan.mall.mgt.common.FailReason.*;
+import static club.banyuan.mall.mgt.service.CacheKey.MALL_ADMIN;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -59,7 +66,7 @@ public class AdminServiceImpl implements AdminService {
         UmsAdmin umsAdmin = umsAdminDao.selectByUsername (username);
         if(umsAdmin==null || !passwordEncoder.
                 matches (adminLoginParam.getPassword (),umsAdmin.getPassword ())){
-            throw new RuntimeException ("用户名或密码错误");
+            throw new RequestFailException (UMS_ADMIN_USER_NOT_VALID);
         }
 
         adminLoginResp.setToken (tokenService.generateToken (umsAdmin.getId ().toString ()));
@@ -78,6 +85,9 @@ public class AdminServiceImpl implements AdminService {
         Long adminId =Long.parseLong (tokenService.parseSubject(token)) ;
         //通过id找到umsAdmin对象
         UmsAdmin umsAdmin = adminService.getAdminById (adminId);
+        if(umsAdmin==null){
+            throw new RequestFailException (UMS_ADMIN_USER_NOT_EXIST);
+        }
         //通过id找到resource匹配的路径
         List<UmsResource> adminResources= userResourceService.getResouceByAdminId (adminId);
         List<ResourceConfigAttribute> grantedAuthorities=new ArrayList<> ();
@@ -93,6 +103,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Cacheable(value = MALL_ADMIN,key = "#adminid")
     public AdminInfoResp getInfoByAdminId(long adminid) {
         UmsAdmin umsAdmin=umsAdminDao.selectByPrimaryKey (adminid);
 
@@ -101,7 +112,7 @@ public class AdminServiceImpl implements AdminService {
         adminInfoResp.setUsername (umsAdmin.getUsername ());
         List<UmsRole> umsRoles = umsRoleDao.selectRoleByAdminId (adminid);
         if(CollUtil.isEmpty (umsRoles)){
-            throw new RuntimeException ("角色权限不合法");
+            throw new RequestFailException (UMS_ADMIN_ROLE_EMPTY);
         }
         List<Long> roleIds=new ArrayList<> ();
         for (UmsRole umsRole : umsRoles) {

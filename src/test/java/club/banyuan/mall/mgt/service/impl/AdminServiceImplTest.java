@@ -1,9 +1,11 @@
 package club.banyuan.mall.mgt.service.impl;
 
-import club.banyuan.mall.mgt.bean.AdminInfoMenusBean;
+
 import club.banyuan.mall.mgt.bean.AdminInfoResp;
 import club.banyuan.mall.mgt.bean.AdminLoginParam;
 import club.banyuan.mall.mgt.bean.AdminLoginResp;
+import club.banyuan.mall.mgt.bean.RoleCreateParam;
+import club.banyuan.mall.mgt.service.UmsRoleService;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import org.junit.Assert;
@@ -18,6 +20,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class AdminServiceImplTest {
     @Autowired
     private AdminServiceImpl adminService;
+
+
 
     @Test
     public void loginTest(){
@@ -36,4 +40,6 @@ public class AdminServiceImplTest {
         Assert.assertTrue (CollUtil.isNotEmpty (info.getMenus ()));
         Assert.assertTrue (CollUtil.isNotEmpty (info.getRoles ()));
     }
+
+
 }

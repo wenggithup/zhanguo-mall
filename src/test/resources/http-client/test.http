@@ -13,7 +13,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8088/role/list?pageNum=1&pageSize=5&keyword=订单
+GET http://localhost:8088/role/list?pageNum=1&pageSize=5
 Content-Type: application/json
 Authorization: Bearer{{auth_token}}
 
