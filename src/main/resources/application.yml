@@ -1,0 +1,23 @@
+server:
+  port: 8088
+token:
+  secretKey: banyuan
+  expireSec: 3600
+
+request:
+  header: Authorization
+  schema: Bearer
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/zg-mall?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: root
+mybatis:
+  mapper-locations:
+    - dao/*.xml
+
+minio:
+  endpoint: http://127.0.0.1:9000
+  bucketName: dev
+  accessKey: banyuan
+  secretKey: banyuan@com
