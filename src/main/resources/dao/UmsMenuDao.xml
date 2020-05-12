@@ -40,6 +40,13 @@
     <include refid="Base_Column_List" />
     from ums_menu
   </select>
+
+  <select id="selectByParentId" resultType="club.banyuan.mall.mgt.dao.entity.UmsMenu">
+    select
+    <include refid="Base_Column_List" />
+    from ums_menu
+    where parent_id=#{menuParentId}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from ums_menu
     where id = #{id,jdbcType=BIGINT}
@@ -148,5 +155,10 @@
       icon = #{icon,jdbcType=VARCHAR},
       hidden = #{hidden,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateHidden">
+     update ums_menu
+     set hidden=#{arg0}
+     where id=#{arg1}
   </update>
 </mapper>

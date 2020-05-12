@@ -20,7 +20,6 @@ public class CacheServiceImpl implements CacheService {
     }
 
     //声明类转换异常
-    @SuppressWarnings ("unchecked")
     @Override
     public <T> T  get(String key) {
         return (T) redisTemplate.opsForValue ().get (key);

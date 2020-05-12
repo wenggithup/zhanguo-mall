@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * ums_resource
+ * ums_resource_category
  * @author 
  */
-public class UmsResource implements Serializable {
+public class UmsResourceCategory implements Serializable {
     private Long id;
 
     /**
@@ -16,24 +16,14 @@ public class UmsResource implements Serializable {
     private Date createTime;
 
     /**
-     * 资源名称
+     * 分类名称
      */
     private String name;
 
     /**
-     * 资源URL
+     * 排序
      */
-    private String url;
-
-    /**
-     * 描述
-     */
-    private String description;
-
-    /**
-     * 资源分类ID
-     */
-    private Long categoryId;
+    private Integer sort;
 
     private static final long serialVersionUID = 1L;
 
@@ -61,27 +51,11 @@ public class UmsResource implements Serializable {
         this.name = name;
     }
 
-    public String getUrl() {
-        return url;
+    public Integer getSort() {
+        return sort;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }

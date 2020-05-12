@@ -4,7 +4,6 @@ import club.banyuan.mall.mgt.bean.AdminInfoMenusBean;
 import club.banyuan.mall.mgt.bean.AdminInfoResp;
 import club.banyuan.mall.mgt.bean.AdminLoginParam;
 import club.banyuan.mall.mgt.bean.AdminLoginResp;
-import club.banyuan.mall.mgt.common.FailReason;
 import club.banyuan.mall.mgt.common.RequestFailException;
 import club.banyuan.mall.mgt.dao.UmsAdminDao;
 import club.banyuan.mall.mgt.dao.UmsMenuDao;
@@ -21,7 +20,6 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,6 +31,7 @@ import java.util.stream.Collectors;
 
 import static club.banyuan.mall.mgt.common.FailReason.*;
 import static club.banyuan.mall.mgt.service.CacheKey.MALL_ADMIN;
+
 
 @Service
 public class AdminServiceImpl implements AdminService {

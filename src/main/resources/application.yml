@@ -21,3 +21,6 @@ minio:
   bucketName: dev
   accessKey: banyuan
   secretKey: banyuan@com
+
+
+

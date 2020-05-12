@@ -19,5 +19,16 @@ public interface UmsMenuDao {
 
     List<UmsMenu> selectByRoleByIds(List<Long> roleIds);
 
+
+
+
+
+    List<UmsMenu> selectByParentId(Long menuParentId);
+
+
     List<UmsMenu> selectAll();
+
+    int updateHidden(Integer hidden, Integer menuId);
+
+
 }
